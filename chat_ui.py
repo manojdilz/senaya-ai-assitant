@@ -260,7 +260,7 @@ class Chat_UI(QtWidgets.QWidget):
         self.verticalLayout.addWidget(self.chat_area_frame)
         self.bottom_area = QtWidgets.QFrame(self.main_frame)
         self.bottom_area.setMinimumSize(QtCore.QSize(0, 80))
-        self.bottom_area.setMaximumSize(QtCore.QSize(16777215, 100))
+        self.bottom_area.setMaximumSize(QtCore.QSize(16777215, 80))
         self.bottom_area.setStyleSheet("#bottom_area{\n"
                                        "    border:2px solid rgb(97, 53, 131);\n"
                                        "    border-radius:15px;\n"
@@ -373,10 +373,11 @@ class Chat_UI(QtWidgets.QWidget):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("Form", "Senaya - Virtual Assistant"))
+        self.setWindowTitle(_translate("Form", "Osana - Virtual Assistant"))
         self.logo_btn.setToolTip(_translate(
             "Form", "<html><head/><body><p><span style=\" color:#ffffff;\">Click to check App\'s Info</span></p></body></html>"))
-        self.title_label.setText(_translate("Form", "Senaya"))
+        self.logo_btn.setShortcut(_translate("Form", "Ctrl+S"))
+        self.title_label.setText(_translate("Form", "Osana"))
         self.label.setToolTip(_translate(
             "Form", "<html><head/><body><p><span style=\" color:#000000;\">You are offline</span></p></body></html>"))
         self.label.setText(_translate("Form", "offline"))
@@ -385,6 +386,7 @@ class Chat_UI(QtWidgets.QWidget):
                                            "p, li { white-space: pre-wrap; }\n"
                                            "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
                                            "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.mic_btn.setShortcut(_translate("Form", "M"))
         self.send_btn.setShortcut(_translate("Form", "Return"))
 
     def send_btn_action(self):
@@ -403,18 +405,7 @@ class Chat_UI(QtWidgets.QWidget):
         if not self.is_recording_started:
             self.is_recording_started = True
             self.send_btn.setEnabled(False)
-            self.mic_btn.setStyleSheet("#mic_btn{    \n"
-                                       "    color: rgb(255, 255, 255);\n"
-                                       "    background-color: rgb(0, 0, 0);\n"
-                                       "    border:1px solid rgb(255,0,0);\n"
-                                       "    border-radius:25px;\n"
-                                       "}\n"
-                                       "\n"
-                                       "#mic_btn:hover{\n"
-                                       "    border-color: rgb(255, 0, 0);\n"
-                                       "}")
             recognize_speech(self)
-
         else:
             self.is_recording_started = False
             self.mic_btn.setEnabled(False)
