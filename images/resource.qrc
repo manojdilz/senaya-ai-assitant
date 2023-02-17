@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="images">
+    <file>app_name.png</file>
+    <file>log.png</file>
+    <file>mic.png</file>
+    <file>logo_with_name.jpg</file>
+    <file>send.png</file>
+    <file>splash.gif</file>
+  </qresource>
+</RCC>
