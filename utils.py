@@ -131,26 +131,36 @@ class RecordVoice(QThread):
 
     def __init__(self, parent):
         super().__init__(parent=parent)
-        self.audio = pyaudio.PyAudio()
-        self.stream = self.audio.open(format=pyaudio.paInt16, channels=1,
-                                      rate=44100, input=True, frames_per_buffer=1024)
-        self.frames = []
         self.parent = parent
 
     def run(self):
+        audio = pyaudio.PyAudio()
+        stream = audio.open(format=pyaudio.paInt16, channels=1,
+                                      rate=44100, input=True, frames_per_buffer=1024)
+        frames = []
         running = True
+        self.parent.mic_btn.setStyleSheet("#mic_btn{    \n"
+                                       "    color: rgb(255, 255, 255);\n"
+                                       "    background-color: rgb(0, 0, 0);\n"
+                                       "    border:1px solid rgb(255,0,0);\n"
+                                       "    border-radius:25px;\n"
+                                       "}\n"
+                                       "\n"
+                                       "#mic_btn:hover{\n"
+                                       "    border-color: rgb(255, 0, 0);\n"
+                                       "}")
         try:
             while self.parent.is_recording_started and running:
-                data = self.stream.read(1024)
-                self.frames.append(data)
+                data = stream.read(1024)
+                frames.append(data)
         except:
             running = False
-        self.stream.stop_stream()
-        self.stream.close()
-        self.audio.terminate()
-        self.frames = b''.join(self.frames)
+        stream.stop_stream()
+        stream.close()
+        audio.terminate()
+        frames = b''.join(frames)
         self.signal.emit(sr.AudioData(
-            self.frames, sample_rate=44100, sample_width=2))
+            frames, sample_rate=44100, sample_width=2))
 
 
 class RecognizeAudio(QThread):
